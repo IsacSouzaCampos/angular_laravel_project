@@ -14,8 +14,19 @@
     "location": "Rua Lauro Linhares, Trindade, Florianópolis"
 }
 
+{
+    "cnpj": "83899526000182",
+    "name": "Universidade Federal de Santa Catarina",
+    "location": "Rua Lauro Linhares, Trindade, Florianópolis"
+}
+
 
 {
     "cnpj": "04441528000157",
+    "cpf": "08270794945"
+}
+
+{
+    "cnpj": "83899526000182",
     "cpf": "08270794945"
 }

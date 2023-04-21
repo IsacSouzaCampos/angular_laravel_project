@@ -1,0 +1,20 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    
+    display: flex;
+    justify-content: flex-end;
+}
+
+.text-area div {
+    font-size: x-small;
+}
+
+.description {
+    margin-top: 5px;
+}
+
+.author {
+    margin-top: -15px;
+}
