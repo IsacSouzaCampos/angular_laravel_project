@@ -1,7 +1,7 @@
 .footer {
     position: fixed;
     bottom: 0;
-    height: 50px;
+    height: 40px;
     
     display: flex;
     justify-content: flex-end;
@@ -9,10 +9,6 @@
 
 .text-area div {
     font-size: x-small;
-}
-
-.description {
-    margin-top: 5px;
 }
 
 .author {

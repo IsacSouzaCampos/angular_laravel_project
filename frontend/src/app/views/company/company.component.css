@@ -1,0 +1,19 @@
+.company {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-create {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-create button {
+    width: 300px;
+}
