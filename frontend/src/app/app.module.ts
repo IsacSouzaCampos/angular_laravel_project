@@ -14,12 +14,14 @@ import { HomeComponent } from './views/home/home.component';
 import { CompanyComponent } from './views/company/company.component';
 import { EmployeeComponent } from './views/employee/employee.component';
 
+import { EmployeeCreateComponent } from './components/employee/employee-create/employee-create.component';
+import { CompanyCreateComponent } from './components/company/company-create/company-create.component';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { EmployeeCreateComponent } from './components/employee/employee-create/employee-create.component';
-import { CompanyCreateComponent } from './components/company/company-create/company-create.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { CompanyCreateComponent } from './components/company/company-create/comp
     MatListModule,
     MatCardModule,
     MatButtonModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
