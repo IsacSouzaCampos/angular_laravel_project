@@ -1,10 +1,15 @@
-const express = require('express');
+const express = require('express')
 const bcrypt  = require('bcryptjs')
+const cors = require('cors');
 
-const app  = express();
+const app  = express()
 
 // Parse JSON
-app.use(express.json());
+app.use(express.json())
+
+app.use(cors({
+    origin: 'http://localhost:4200'
+}))
 
 
 const db = require('knex')({
@@ -15,7 +20,7 @@ const db = require('knex')({
         password : 'postgres',
         database : 'BRy'
     }
-});
+})
 
 
 // Testa a conexão

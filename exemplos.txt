@@ -7,6 +7,15 @@
     "password": "123"
 }
 
+{
+    "cpf": "00000000000",
+    "name": "Camilla Pietra Otto",
+    "location": "Rua João Eliseu de Campos, 262, Bom Viver, Biguaçu",
+    "email": "cahotto96@gmail.com",
+    "login": "cahotto",
+    "password": "1234"
+}
+
 
 {
     "cnpj": "04441528000157",
