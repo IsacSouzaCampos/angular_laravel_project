@@ -1,0 +1,19 @@
+.container {
+    width: 800px;
+    padding: 20px;
+    margin: auto;
+}
+
+.title {
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(128, 128, 128, 0.667);
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-cancel {
+    margin-top: 10px;
+}

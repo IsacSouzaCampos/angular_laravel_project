@@ -1,0 +1,18 @@
+.container {
+    width: 50%;
+    margin: auto;
+}
+
+.container div {
+    display: flex;
+}
+
+.search-btn {
+    width: 15%;
+    height: 55px;
+    margin-left: 5px;
+}
+
+.container mat-form-field, button {
+    width: 100%;
+}

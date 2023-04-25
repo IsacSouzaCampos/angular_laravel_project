@@ -10,10 +10,10 @@ import { CompanyService } from '../company.service';
 })
 export class CompanyCreateComponent {
 
-  private company: Company = {
-    cnpj: '00000000000000',
-    name: 'Fulano da Silva Ltda.',
-    location: 'Rua do Fulano da Silva Ltda.'
+  public company: Company = {
+    cnpj: '',
+    name: '',
+    location: ''
   }
 
   constructor(private router: Router, 
@@ -23,6 +23,8 @@ export class CompanyCreateComponent {
     this.companyService.create(this.company).subscribe(() => {
       this.companyService.showSnackBar('Empresa cadastrada!')
       this.router.navigate(['company'])
+    }, error => {
+      this.companyService.showSnackBar(error.error.message)
     })
   }
 

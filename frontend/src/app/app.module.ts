@@ -22,8 +22,15 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CompanyReadComponent } from './components/company/company-read/company-read.component';
+import { EmployeeReadComponent } from './components/employee/employee-read/employee-read.component';
+import { EmployeeRemoveCompanyComponent } from './components/employee/employee-remove-company/employee-remove-company.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,10 @@ import { HttpClientModule } from '@angular/common/http';
     CompanyComponent,
     EmployeeComponent,
     EmployeeCreateComponent,
-    CompanyCreateComponent
+    CompanyCreateComponent,
+    CompanyReadComponent,
+    EmployeeReadComponent,
+    EmployeeRemoveCompanyComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +58,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+
+    FormsModule,
 
     HttpClientModule,
   ],

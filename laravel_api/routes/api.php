@@ -28,3 +28,5 @@ Route::post('employee/create', [crudController::class, 'createEmployee']);
 Route::get('company/{cnpj}', [crudController::class, 'getCompany']);
 
 Route::get('employee/{cpf}', [crudController::class, 'getEmployee']);
+
+Route::delete('company_employee/{cnpj}/{cpf}', [crudController::class, 'deleteCompanyEmployee'])

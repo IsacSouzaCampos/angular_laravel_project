@@ -10,7 +10,9 @@ import { Company } from './company.model';
 })
 export class CompanyService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/company'
+  private baseApiUrl = 'http://127.0.0.1:8000/api/company'
+
+  // Informa quando há um conteúdo JSON no request
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -29,7 +31,11 @@ export class CompanyService {
   }
 
   create(company: Company): Observable<Company> {
-    return this.httpClient.post<Company>(this.apiUrl + '/create', JSON.stringify(company), 
+    return this.httpClient.post<Company>(this.baseApiUrl + '/create', JSON.stringify(company), 
                                          this.httpOptions)
+  }
+
+  read(cnpj: string): Observable<Company> {
+    return this.httpClient.get<Company>(this.baseApiUrl + '/' + cnpj)
   }
 }

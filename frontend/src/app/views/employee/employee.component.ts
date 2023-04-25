@@ -11,6 +11,6 @@ export class EmployeeComponent {
   constructor(private router: Router) {}
 
   create(): void {
-    this.router.navigate(['/employee/create']);
+    this.router.navigate(['/employee/create'])
   }
 }

@@ -1,2 +1,13 @@
-<button mat-raised-button (click)="onSave()">Salvar</button>
-<button mat-raised-button (click)="onCancel()" color="primary">Cancelar</button>
+<mat-card class="container">
+    <mat-card-title class="title">Cadastrar Empresa</mat-card-title>
+    <form class="create-form">
+
+        <!-- Atualização dos dados da empresa usando Two Way Data Binding -->
+        <mat-form-field><input name="cnpj" matInput placeholder="CNPJ" [(ngModel)]="company.cnpj" required></mat-form-field>
+        <mat-form-field><input name="name" matInput placeholder="Nome Fantasia" [(ngModel)]="company.name" required></mat-form-field>
+        <mat-form-field><input name="location" matInput placeholder="Endereço" [(ngModel)]="company.location" required></mat-form-field>
+    </form>
+
+    <button mat-raised-button (click)="onSave()">Salvar</button>
+    <button class="btn-cancel" mat-raised-button (click)="onCancel()" color="primary">Cancelar</button>
+</mat-card>

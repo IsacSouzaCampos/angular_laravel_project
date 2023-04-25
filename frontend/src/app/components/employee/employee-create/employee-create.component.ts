@@ -14,13 +14,13 @@ export class EmployeeCreateComponent implements OnInit {
   constructor(private router: Router, 
     private employeeService: EmployeeService) {}
   
-  private employee: Employee = {
-    cpf: '11111111111',
-    name: 'Fulano da Silva',
-    location: 'Rua do Fulano da Silva',
-    email: 'fulano@gmail.com',
-    login: 'fulano',
-    password: 'senha-do-fulano'
+  public employee: Employee = {
+    cpf: '',
+    name: '',
+    location: '',
+    email: '',
+    login: '',
+    password: ''
   }
 
   ngOnInit(): void { }
@@ -29,6 +29,8 @@ export class EmployeeCreateComponent implements OnInit {
     this.employeeService.create(this.employee).subscribe(() => {
       this.employeeService.showSnackBar('Funcionário cadastrado!')
       this.router.navigate(['employee'])
+    }, error => {
+      this.employeeService.showSnackBar(error.error.message)
     })
   }
 
