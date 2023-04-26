@@ -1,0 +1,15 @@
+<mat-card class="container">
+    <h1 class="title">Adicionar Funcionário</h1>
+    
+    <div class="search-container">
+        <div>
+            <mat-form-field class="input"><input name="cpf" matInput placeholder="CPF" [(ngModel)]="employee.cpf" required></mat-form-field>
+            <button class="search-btn" mat-raised-button (click)="onAddEmployee()">
+                <i class="material-icons">work</i>
+            </button>
+        </div>
+    </div>
+
+
+    <button class="btn-cancel" mat-raised-button (click)="onCancel()" color="primary">Cancelar</button>
+</mat-card>

@@ -3,7 +3,7 @@
     margin: auto;
 }
 
-.container div {
+.search-container div {
     display: flex;
 }
 
@@ -13,6 +13,35 @@
     margin-left: 5px;
 }
 
-.container mat-form-field, button {
+.search-container mat-form-field, button {
     width: 100%;
+}
+
+.data-title {
+    margin-top: 30px;
+}
+
+table {
+    margin-bottom: 20px;
+}
+
+.line {
+    display: flex;
+}
+
+.line p {
+    margin-left: 10px;
+}
+
+table {
+    border-bottom: 2px solid black;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons-container button {
+    margin: 5px;
 }

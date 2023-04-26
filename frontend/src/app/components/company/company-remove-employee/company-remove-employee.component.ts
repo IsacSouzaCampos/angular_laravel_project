@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
+import { Employee } from '../../employee/employee.model';
 import { CompanyEmployeeService } from '../../company-employee.service';
-import { Company } from '../../company/company.model';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-employee-remove-company',
-  templateUrl: './employee-remove-company.component.html',
-  styleUrls: ['./employee-remove-company.component.css']
+  selector: 'app-company-remove-employee',
+  templateUrl: './company-remove-employee.component.html',
+  styleUrls: ['./company-remove-employee.component.css']
 })
-export class EmployeeRemoveCompanyComponent {
+export class CompanyRemoveEmployeeComponent {
 
-  public company: Company = {
-    cnpj: ''
+  public employee: Employee = {
+    cpf: ''
   }
 
   constructor(private companyEmployeeService: CompanyEmployeeService,
       private router: Router) {}
 
-  onRemoveCompany(): void {
-    this.companyEmployeeService.company.cnpj = this.company.cnpj
+  onRemoveEmployee(): void {
+    this.companyEmployeeService.employee.cpf = this.employee.cpf
     this.companyEmployeeService.remove().subscribe(() => {
       this.companyEmployeeService.showSnackBar('Vínculo removido com sucesso!')
-      this.router.navigate(['employee'])
+      this.router.navigate(['company'])
     }, error => {
       this.companyEmployeeService.showSnackBar(error.message)
-      this.router.navigate(['employee'])
+      this.router.navigate(['company'])
     })
   }
 

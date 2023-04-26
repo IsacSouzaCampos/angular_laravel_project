@@ -1,10 +1,10 @@
 <mat-card class="container">
-    <h1 class="title">Remover Empresa</h1>
+    <h1 class="title">Remover Funcionário</h1>
     
     <div class="search-container">
         <div>
-            <mat-form-field class="input"><input name="cnpj" matInput placeholder="CNPJ" [(ngModel)]="company.cnpj" required></mat-form-field>
-            <button class="search-btn" mat-raised-button (click)="onRemoveCompany()">
+            <mat-form-field class="input"><input name="cpf" matInput placeholder="CPF" [(ngModel)]="employee.cpf" required></mat-form-field>
+            <button class="search-btn" mat-raised-button (click)="onRemoveEmployee()">
                 <i class="material-icons">work_off</i>
             </button>
         </div>

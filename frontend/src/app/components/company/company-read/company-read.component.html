@@ -1,8 +1,66 @@
 <div class="container">
+
     <div class="search-container">
-        <mat-form-field class="input"><input name="cnpj" matInput placeholder="CNPJ" [(ngModel)]="company.cnpj" required></mat-form-field>
-        <button class="search-btn" mat-raised-button (click)="onSearch()">
-            <i class="material-icons">search</i>
-        </button>
+        <div class="search-container">
+            <mat-form-field class="input"><input name="cnpj" matInput placeholder="CNPJ" [(ngModel)]="company.cnpj" required></mat-form-field>
+            <button class="search-btn" mat-raised-button (click)="onSearch()">
+                <i class="material-icons">search</i>
+            </button>
+        </div>
     </div>
+
+    <div *ngIf="company.show" class="company-data">
+        <h3 class="data-title"><strong>Dados da Empresa:</strong></h3>
+        <table>
+            <tr>
+                <td>CNPJ:</td>
+                <td>{{ company.cnpj }}</td>
+            </tr>
+            <tr>
+                <td>Nome:</td>
+                <td>{{ company.name }}</td>
+            </tr>
+            <tr>
+                <td>Endereço:</td>
+                <td>{{ company.location }}</td>
+            </tr>
+        </table>
+
+        <h3 class="data-title"><strong>Funcionários:</strong></h3>
+        <table *ngFor="let employee of company.employees">
+            <tr>
+                <td>CPF:</td>
+                <td>{{ employee.cpf }}</td>
+            </tr>
+            <tr>
+                <td>Nome:</td>
+                <td>{{ employee.name }}</td>
+            </tr>
+            <tr>
+                <td>Endereço:</td>
+                <td>{{ employee.location }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{ employee.email }}</td>
+            </tr>
+            <tr>
+                <td>Login:</td>
+                <td>{{ employee.login }}</td>
+            </tr>
+        </table>
+        
+        <div class="buttons-container">
+            <button mat-raised-button (click)="onAddEmployee()">
+                Novo Funcionário <i class="material-icons">work</i>
+            </button>
+            <button mat-raised-button (click)="onRemoveEmployee()">
+                Remover Funcionário <i class="material-icons">work_off</i>
+            </button>
+            <button mat-raised-button color="warn" (click)="onDelete()">
+                Deletar Empresa <i class="material-icons">delete_forever</i>
+            </button>
+        </div>
+    </div>
+
 </div>

@@ -1,7 +1,11 @@
+import { CompanyEmployeeService } from './../../company-employee.service';
 import { Router } from '@angular/router';
-import { Employee } from '../employee.model';
 import { EmployeeService } from './../employee.service';
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { Employee } from './../employee.model';
+import { Company } from './../../company/company.model';
 
 @Component({
   selector: 'app-employee-read',
@@ -11,15 +15,17 @@ import { Component } from '@angular/core';
 export class EmployeeReadComponent {
 
   public employee: Employee = {
+    id: -1,
     cpf: '',
+    companies: []
   }
 
-  constructor(private employeeService: EmployeeService, 
+  constructor(private employeeService: EmployeeService,
+    private companyEmployeeService: CompanyEmployeeService,
     private router: Router) {}
 
   onSearch(): void {
     this.employeeService.read(this.employee.cpf).subscribe(employee => {
-      // console.log(json)
       this.employee = employee
       this.employee.show = true
     }, error => {
@@ -27,7 +33,13 @@ export class EmployeeReadComponent {
     })
   }
 
+  onAddCompany(): void {
+    this.companyEmployeeService.employee.cpf = this.employee.cpf
+    this.router.navigate(['employee/add-company'])
+  }
+
   onRemoveCompany(): void {
-    this.router.navigate(['/employee/remove-company'])
+    this.companyEmployeeService.employee.cpf = this.employee.cpf
+    this.router.navigate(['employee/remove-company'])
   }
 }

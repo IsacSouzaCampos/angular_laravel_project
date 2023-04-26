@@ -38,4 +38,8 @@ export class CompanyService {
   read(cnpj: string): Observable<Company> {
     return this.httpClient.get<Company>(this.baseApiUrl + '/' + cnpj)
   }
+
+  remove(cnpj: string): Observable<any> {
+    return this.httpClient.delete<any>(this.baseApiUrl + '/' + cnpj)
+  }
 }

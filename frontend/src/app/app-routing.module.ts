@@ -8,6 +8,9 @@ import { EmployeeComponent } from './views/employee/employee.component';
 import { EmployeeCreateComponent } from './components/employee/employee-create/employee-create.component';
 import { CompanyCreateComponent } from './components/company/company-create/company-create.component';
 import { EmployeeRemoveCompanyComponent } from './components/employee/employee-remove-company/employee-remove-company.component';
+import { EmployeeAddCompanyComponent } from './components/employee/employee-add-company/employee-add-company.component';
+import { CompanyAddEmployeeComponent } from './components/company/company-add-employee/company-add-employee.component';
+import { CompanyRemoveEmployeeComponent } from './components/company/company-remove-employee/company-remove-employee.component';
 
 const routes: Routes = [
   {
@@ -22,6 +25,14 @@ const routes: Routes = [
     path: 'company/create',
     component: CompanyCreateComponent
   },
+  {
+    path: 'company/add-employee',
+    component: CompanyAddEmployeeComponent
+  },
+  {
+    path: 'company/remove-employee',
+    component: CompanyRemoveEmployeeComponent
+  },
   
   {
     path: 'employee',
@@ -34,6 +45,10 @@ const routes: Routes = [
   {
     path: 'employee/remove-company',
     component: EmployeeRemoveCompanyComponent
+  },
+  {
+    path: 'employee/add-company',
+    component: EmployeeAddCompanyComponent
   }
 ];
 

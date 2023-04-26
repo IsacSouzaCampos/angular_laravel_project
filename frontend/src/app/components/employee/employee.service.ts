@@ -1,4 +1,3 @@
-import { Company } from './../company/company.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,7 +12,11 @@ export class EmployeeService {
 
   constructor(private snackBar: MatSnackBar, private httpClient: HttpClient) { }
 
-  baseApiUrl = 'http://127.0.0.1:8000/api/employee'
+  private baseApiUrl = 'http://127.0.0.1:8000/api/employee'
+
+  public cnpj = ''
+  public cpf  = ''
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -37,14 +40,11 @@ export class EmployeeService {
     return this.httpClient.get<Employee>(this.baseApiUrl + '/' + cpf)
   }
 
-  removeCompany(employee: Employee, cnpj: string): Observable<Employee> {
-    let company_id = -1
-    employee.companies?.forEach(company => {
-      if (company.cnpj == cnpj && company.id) { 
-        company_id = company.id
-        return
-      }
-    })
-    return this.httpClient.delete<Employee>(this.baseApiUrl + '/' + company_id + '/' + employee.id)
+  // addCompany(cnpj: string, cpf: string): Observable<Employee> {
+  //   return this.httpClient.post<Employee>(this.baseCompanyEmployeeUrl + '/create/' + cnpj + '/' + cpf)
+  // }
+
+  removeCompany(cnpj: string, cpf: string): Observable<any> {
+    return this.httpClient.delete<any>(this.baseApiUrl + '/' + cnpj + '/' + cpf)
   }
 }

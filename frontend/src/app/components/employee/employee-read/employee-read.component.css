@@ -33,6 +33,10 @@ table {
     margin-left: 10px;
 }
 
+table {
+    border-bottom: 2px solid black;
+}
+
 .buttons-container {
     display: flex;
     justify-content: space-between;

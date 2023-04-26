@@ -31,6 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CompanyReadComponent } from './components/company/company-read/company-read.component';
 import { EmployeeReadComponent } from './components/employee/employee-read/employee-read.component';
 import { EmployeeRemoveCompanyComponent } from './components/employee/employee-remove-company/employee-remove-company.component';
+import { EmployeeAddCompanyComponent } from './components/employee/employee-add-company/employee-add-company.component';
+import { CompanyAddEmployeeComponent } from './components/company/company-add-employee/company-add-employee.component';
+import { CompanyRemoveEmployeeComponent } from './components/company/company-remove-employee/company-remove-employee.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { EmployeeRemoveCompanyComponent } from './components/employee/employee-r
     CompanyCreateComponent,
     CompanyReadComponent,
     EmployeeReadComponent,
-    EmployeeRemoveCompanyComponent
+    EmployeeRemoveCompanyComponent,
+    EmployeeAddCompanyComponent,
+    CompanyAddEmployeeComponent,
+    CompanyRemoveEmployeeComponent
   ],
   imports: [
     BrowserModule,

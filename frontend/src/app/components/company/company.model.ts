@@ -6,5 +6,6 @@ export interface Company {
     cnpj: string
     name?: string
     location?: string,
-    employees?: Employee[]
+    employees?: Employee[],
+    show?: boolean
 }

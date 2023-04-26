@@ -19,14 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('company_employee/create', [crudController::class, 'createCompanyEmployee']);
-
 Route::post('company/create', [crudController::class, 'createCompany']);
-
-Route::post('employee/create', [crudController::class, 'createEmployee']);
 
 Route::get('company/{cnpj}', [crudController::class, 'getCompany']);
 
+Route::delete('company/{cnpj}', [crudController::class, 'deleteCompany']);
+
+Route::post('company_employee/create/{cnpj}/{cpf}', [crudController::class, 'createCompanyEmployee']);
+
+Route::post('employee/create', [crudController::class, 'createEmployee']);
+
 Route::get('employee/{cpf}', [crudController::class, 'getEmployee']);
 
-Route::delete('company_employee/{cnpj}/{cpf}', [crudController::class, 'deleteCompanyEmployee'])
+Route::delete('company_employee/delete/{cnpj}/{cpf}', [crudController::class, 'deleteCompanyEmployee']);

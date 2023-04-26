@@ -1,7 +1,7 @@
 <div class="container">
 
     <div class="search-container">
-        <div class="search-container">
+        <div>
             <mat-form-field class="input"><input name="cpf" matInput placeholder="CPF" [(ngModel)]="employee.cpf" required></mat-form-field>
             <button class="search-btn" mat-raised-button (click)="onSearch()">
                 <i class="material-icons">search</i>
@@ -10,23 +10,6 @@
     </div>
 
     <div *ngIf="employee.show" class="employee-data">
-        <!-- <h3 class="data-title"><strong>Dados do Funcionário:</strong></h3>
-        <div class="line"><label>CPF:</label><p>{{ employee.cpf }}</p></div>
-        <div class="line"><label>Nome:</label><p>{{ employee.name }}</p></div>
-        <div class="line"><label>Endereço:</label><p>{{ employee.location }}</p></div>
-        <div class="line"><label>Email:</label><p>{{ employee.email }}</p></div>
-        <div class="line"><label>Login:</label><p>{{ employee.login }}</p></div>
-
-        <h3 class="data-title"><strong>Empresas:</strong></h3>
-        <ul class="companies-list">
-            <li *ngFor="let company of employee.companies">
-                <div class="line"><label>CNPJ:</label><p>{{ company.cnpj }}</p></div>
-                <div class="line"><label>Nome:</label><p>{{ company.name }}</p></div>
-                <div class="line"><label>Endereço:</label><p>{{ company.location }}</p></div>
-            </li>
-            <hr>
-        </ul> -->
-
         <h3 class="data-title"><strong>Dados do Funcionário:</strong></h3>
         <table>
             <tr>
@@ -65,12 +48,14 @@
                 <td>Endereço:</td>
                 <td>{{ company.location }}</td>
             </tr>
-            <hr>
         </table>
         
         <div class="buttons-container">
+            <button mat-raised-button (click)="onAddCompany()">
+                Nova Empresa <i class="material-icons">work</i>
+            </button>
             <button mat-raised-button (click)="onRemoveCompany()">
-                Desvincular Empresa <i class="material-icons">work_off</i>
+                Remover Empresa <i class="material-icons">work_off</i>
             </button>
             <button mat-raised-button color="warn">
                 Deletar Funcionário <i class="material-icons">delete_forever</i>
