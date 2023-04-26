@@ -12,82 +12,15 @@ use App\Models\CompanyEmployee;
 
 class crudController extends Controller
 {
-    public function createCompanyEmployee(Request $request)
-    {
-        try
-        {
-            $cnpj = $request->cnpj;
-            $cpf  = $request->cpf;
-
-            // Busca o funcionário e a empresa
-            $employee = Employee::where('cpf', $cpf)->first();
-            $company = Company::where('cnpj', $cnpj)->first();
-
-            if ($company->employees()->where('id', $employee->id)->exists())
-            {
-                return response()->json(['message' => 'Vínculo já existente!'], 500);
-            }
-
-            if (!$employee)
-            {
-                return response()->json(['message' => 'Funcionário não encontrado.'], 404);
-            }
-            if (!$company)
-            {
-                return response()->json(['message' => 'Empresa não encontrada.'], 404);
-            }
-
-            // Cria uma nova relação entre eles
-            $companyEmployee              = new CompanyEmployee;
-            $companyEmployee->company_id  = $company->id;
-            $companyEmployee->employee_id = $employee->id;
-            $companyEmployee->save();
-
-            return response()->json(['message' => 'Vínculo criado com sucesso!'], 200);
-        } 
-        catch(Exception $e)
-        {
-            return response()->json(['message' => 'Não foi possível criar vínculo.'], 500);
-        }
-    }
-
-
-    public function deleteCompanyEmployee($cnpj, $cpf) 
-    {
-        try
-        {
-            $company  = Company::where('cnpj', $cnpj)->first();
-            $employee = Employee::where('cpf', $cpf)->first();
-
-            if (!$company)
-            {
-                return response()->json(['message' => 'Empresa não encontrada!'], 404);
-            }
-            if (!$employee)
-            {
-                return response()->json(['message' => 'Funcionário não encontrado!'], 404);
-            }
-
-            // remove a relação com o funcionário
-            $company->employees()->detach($employee->id);
-
-            return response()->json(['message' => 'Relação empresa e funcionário desfeita!'], 200);
-        }
-        catch (Exception $e)
-        {
-            return response()->json(['message' => 'Erro ao desvincular empresa e funcionário!'], 500);
-        }
-    }
-
-
     public function createCompany(Request $request)
     {
         try
-        {
+        {            
             # Sanitizar
             $cnpj     = filter_var($request->cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
             $name     = filter_var($request->name, FILTER_SANITIZE_SPECIAL_CHARS);
             $location = filter_var($request->location, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cnpj     = str_replace(['-', '.', '/'], '', $cnpj);
 
             $company = new Company;
 
@@ -107,7 +40,11 @@ class crudController extends Controller
     public function getCompany($cnpj)
     {
         try
-        {            
+        {
+            # Sanitizar
+            $cnpj = filter_var($cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cnpj = str_replace(['-', '.', '/'], '', $cnpj);
+
             # Consulta empresa
             $company = Company::where('cnpj', $cnpj)->first();
 
@@ -149,12 +86,19 @@ class crudController extends Controller
     {
         try
         {
+            # Sanitizar
+            $cnpj = filter_var($cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cnpj = str_replace(['-', '.', '/'], '', $cnpj);
+            
             $company = Company::where('cnpj', $cnpj)->first();
 
             if (!$company)
             {
                 return response()->json(['message' => 'Empresa não encontrada!'], 404);
             }
+
+            // Deletar os registros da empresa na tabela company_employee
+            DB::table('company_employee')->where('company_id', $company->id)->delete();
 
             $company->delete();
             return response()->json(['message' => 'Empresa deletada com sucesso!'], 200);
@@ -176,6 +120,8 @@ class crudController extends Controller
             $location = filter_var($request->location, FILTER_SANITIZE_SPECIAL_CHARS);
             $email    = filter_var($request->email, FILTER_SANITIZE_EMAIL);
             $login    = filter_var($request->login, FILTER_SANITIZE_SPECIAL_CHARS);
+            
+            $cpf      = str_replace(['-', '.', '/'], '', $cpf);
             
             # Criptografa a senha
             $hash = password_hash($request->password, PASSWORD_DEFAULT);
@@ -203,6 +149,10 @@ class crudController extends Controller
     {
         try
         {
+            # Sanitizar
+            $cpf = str_replace(['-', '.', '/'], '', $cpf);
+            $cpf = filter_var($cpf, FILTER_SANITIZE_SPECIAL_CHARS);
+
             $employee = Employee::where('cpf', $cpf)->first();
 
             # Retorna com mensagem de erro se funcionário não foi encontrado
@@ -237,11 +187,125 @@ class crudController extends Controller
     }
 
 
+    public function deleteEmployee($cpf)
+    {
+        try
+        {
+            # Sanitizar
+            $cpf = filter_var($cpf, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cpf = str_replace(['-', '.', '/'], '', $cpf);
+            
+            $employee = Employee::where('cpf', $cpf)->first();
+
+            if (!$employee)
+            {
+                return response()->json(['message' => 'Funcionário não encontrado!'], 404);
+            }
+
+            // Deletar os registros do funcionário na tabela company_employee
+            DB::table('company_employee')->where('employee_id', $employee->id)->delete();
+
+            $employee->delete();
+            return response()->json(['message' => 'Funcionário deletado com sucesso!'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => 'Erro ao tentar deletar Funcionário.'], 500);
+        }
+    }
+
+    
+    public function createCompanyEmployee($cnpj, $cpf)
+    {
+        try
+        {
+            # Sanitizar
+            $cnpj = str_replace(['-', '.', '/'], '', $cnpj);
+            $cpf  = str_replace(['-', '.', '/'], '', $cpf);
+            $cnpj = filter_var($cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cpf  = filter_var($cpf, FILTER_SANITIZE_SPECIAL_CHARS);
+
+            # Busca o funcionário e a empresa
+            $company  = Company::where('cnpj', $cnpj)->first();
+            $employee = Employee::where('cpf', $cpf)->first();
+
+            if ($company->employees()->where('employees.id', $employee->id)->exists())
+            {
+                return response()->json(['message' => 'Vínculo já existente!'], 500);
+            }
+
+            if (!$employee)
+            {
+                return response()->json(['message' => 'Funcionário não encontrado.'], 404);
+            }
+            if (!$company)
+            {
+                return response()->json(['message' => 'Empresa não encontrada.'], 404);
+            }
+
+            # Cria uma nova relação entre eles
+            $companyEmployee              = new CompanyEmployee;
+            $companyEmployee->company_id  = $company->id;
+            $companyEmployee->employee_id = $employee->id;
+            $companyEmployee->save();
+
+            return response()->json(['message' => 'Vínculo criado com sucesso!'], 200);
+        } 
+        catch(Exception $e)
+        {
+            return response()->json(['message' => 'Não foi possível criar vínculo.'], 500);
+        }
+    }
+
+
+    public function deleteCompanyEmployee($cnpj, $cpf) 
+    {
+        try
+        {
+            $cnpj = $cnpj;
+            $cpf  = $cpf;
+
+            # Sanitizar
+            $cnpj = str_replace(['-', '.', '/'], '', $cnpj);
+            $cpf  = str_replace(['-', '.', '/'], '', $cpf);
+            $cnpj = filter_var($cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
+            $cpf  = filter_var($cpf, FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $company  = Company::where('cnpj', $cnpj)->first();
+            $employee = Employee::where('cpf', $cpf)->first();
+
+            if (!$company)
+            {
+                return response()->json(['message' => 'Empresa não encontrada!'], 404);
+            }
+            if (!$employee)
+            {
+                return response()->json(['message' => 'Funcionário não encontrado!'], 404);
+            }
+
+            // remove a relação com o funcionário
+            $company->employees()->detach($employee->id);
+
+            return response()->json(['message' => 'Vínculo removido!'], 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['message' => 'Erro ao desvincular empresa e funcionário!'], 500);
+        }
+    }
+
+
     public function updateCompany(Request $request)
     {
         try
         {
-            $company = Employee::where('cpf', $request->cnpj)->first();
+            $cnpj = $request->cnpj;
+
+            # Sanitizar
+            $cnpj = str_replace(['-', '.', '/'], '', $cnpj);
+            $cnpj = filter_var($cnpj, FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $company = Employee::where('cpf', $cnpj)->first();
 
             # Retorna com mensagem de erro se empresa não foi encontrada
             if (!$company)
@@ -267,7 +331,13 @@ class crudController extends Controller
     {
         try
         {
-            $employee = Employee::where('cpf', $request->cpf)->first();
+            $cpf = $request->cpf;
+
+            # Sanitizar
+            $cpf = str_replace(['-', '.', '/'], '', $cpf);
+            $cpf = filter_var($cpf, FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $employee = Employee::where('cpf', $cpf)->first();
 
             # Retorna com mensagem de erro se funcionário não foi encontrado
             if (!$employee)

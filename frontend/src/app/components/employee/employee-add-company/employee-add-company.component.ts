@@ -26,7 +26,7 @@ export class EmployeeAddCompanyComponent {
       this.router.navigate(['employee'])
     }, error => {
       this.companyEmployeeService.showSnackBar('Não foi possível adicionar a empresa!')
-      this.router.navigate(['employee'])
+      console.error(error)
     })
   }
 

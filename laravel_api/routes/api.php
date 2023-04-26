@@ -25,10 +25,12 @@ Route::get('company/{cnpj}', [crudController::class, 'getCompany']);
 
 Route::delete('company/{cnpj}', [crudController::class, 'deleteCompany']);
 
-Route::post('company_employee/create/{cnpj}/{cpf}', [crudController::class, 'createCompanyEmployee']);
-
 Route::post('employee/create', [crudController::class, 'createEmployee']);
 
 Route::get('employee/{cpf}', [crudController::class, 'getEmployee']);
+
+Route::delete('employee/{cpf}', [crudController::class, 'deleteEmployee']);
+
+Route::post('company_employee/create/{cnpj}/{cpf}', [crudController::class, 'createCompanyEmployee']);
 
 Route::delete('company_employee/delete/{cnpj}/{cpf}', [crudController::class, 'deleteCompanyEmployee']);

@@ -32,15 +32,6 @@ export class CompanyReadComponent {
     })
   }
 
-  onDelete(): void {
-    this.companyService.remove(this.company.cnpj).subscribe(() => {
-      this.companyService.showSnackBar('Empresa removida com sucesso!')
-      this.router.navigate(['company'])
-    }, () => {
-      this.companyService.showSnackBar('Erro ao tentar remover empresa!')
-    })
-  }
-
   onAddEmployee(): void {
     this.companyEmployeeService.company.cnpj = this.company.cnpj
     this.router.navigate(['company/add-employee'])
@@ -49,5 +40,18 @@ export class CompanyReadComponent {
   onRemoveEmployee(): void {
     this.companyEmployeeService.company.cnpj = this.company.cnpj
     this.router.navigate(['company/remove-employee'])
+  }
+
+  onDelete(): void {
+    this.companyService.remove(this.company.cnpj).subscribe(() => {
+      this.companyService.showSnackBar('Empresa removida com sucesso!')
+      
+      // Faz um refresh da página 'company'
+      this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['company'])
+      })
+    }, () => {
+      this.companyService.showSnackBar('Não foi possível remover empresa!')
+    })
   }
 }

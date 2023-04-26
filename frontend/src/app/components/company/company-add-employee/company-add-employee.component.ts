@@ -22,8 +22,9 @@ export class CompanyAddEmployeeComponent {
     this.companyEmployeeService.create().subscribe(() => {
       this.companyEmployeeService.showSnackBar('Vínculo criado com sucesso!')
       this.router.navigate(['company'])
-    }, () => {
+    }, (error) => {
       this.companyEmployeeService.showSnackBar('Não foi possível adicionar o funcionário!')
+      console.error(error)
     })
   }
 

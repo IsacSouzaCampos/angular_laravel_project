@@ -1,27 +1,27 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, SecurityContext } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Employee } from './employee.model';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  constructor(private snackBar: MatSnackBar, private httpClient: HttpClient) { }
-
   private baseApiUrl = 'http://127.0.0.1:8000/api/employee'
-
-  public cnpj = ''
-  public cpf  = ''
 
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
+
+  constructor(private snackBar: MatSnackBar, 
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer) { }
 
   showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'X', {
@@ -37,14 +37,19 @@ export class EmployeeService {
   }
 
   read(cpf: string): Observable<Employee> {
+    cpf = this.sanitize(cpf)
     return this.httpClient.get<Employee>(this.baseApiUrl + '/' + cpf)
   }
 
-  // addCompany(cnpj: string, cpf: string): Observable<Employee> {
-  //   return this.httpClient.post<Employee>(this.baseCompanyEmployeeUrl + '/create/' + cnpj + '/' + cpf)
-  // }
+  remove(cpf: string): Observable<any> {
+    cpf = this.sanitize(cpf)
+    let url = this.baseApiUrl + '/' + cpf
+    return this.httpClient.delete<any>(url)
+  }
 
-  removeCompany(cnpj: string, cpf: string): Observable<any> {
-    return this.httpClient.delete<any>(this.baseApiUrl + '/' + cnpj + '/' + cpf)
+  sanitize(value: string): string {
+    value = value.replace(/[./-]/g, '');
+    value = this.sanitizer.sanitize(SecurityContext.NONE, value) ?? ''
+    return value
   }
 }

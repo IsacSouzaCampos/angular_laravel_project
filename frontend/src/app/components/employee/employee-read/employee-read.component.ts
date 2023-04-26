@@ -15,7 +15,6 @@ import { Company } from './../../company/company.model';
 export class EmployeeReadComponent {
 
   public employee: Employee = {
-    id: -1,
     cpf: '',
     companies: []
   }
@@ -41,5 +40,19 @@ export class EmployeeReadComponent {
   onRemoveCompany(): void {
     this.companyEmployeeService.employee.cpf = this.employee.cpf
     this.router.navigate(['employee/remove-company'])
+  }
+
+  onDelete(): void {
+    this.employeeService.remove(this.employee.cpf).subscribe(() => {
+      this.employeeService.showSnackBar('Funcionário removido!')
+      
+      // Faz um refresh da página 'company'
+      this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['employee'])
+      })
+    }, error => {
+      this.employeeService.showSnackBar('Não foi possível remover funcionário!')
+      console.error(error)
+    })
   }
 }

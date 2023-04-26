@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs';
 import { Company } from './company/company.model';
-import { Injectable } from '@angular/core';
+import { Injectable, SecurityContext } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Employee } from './employee/employee.model';
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class CompanyEmployeeService {
   }
 
   constructor(private snackBar: MatSnackBar,
-      private httpClient: HttpClient) { }
+      private httpClient: HttpClient,
+      private sanitizer: DomSanitizer) { }
 
   showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'X', {
@@ -32,12 +34,24 @@ export class CompanyEmployeeService {
   }
 
   remove(): Observable<any> {
-    return this.httpClient.delete<any>(this.baseCompanyEmployeeUrl + '/delete/' + this.company.cnpj + 
-      '/' + this.employee.cpf)
+    let cnpj = this.sanitize(this.company.cnpj)
+    let cpf  = this.sanitize(this.employee.cpf)
+    
+    return this.httpClient.delete<any>(this.baseCompanyEmployeeUrl + '/delete/' + cnpj + '/' + cpf)
   }
 
   create(): Observable<any> {
-    return this.httpClient.post<any>(this.baseCompanyEmployeeUrl + '/create/' + this.company.cnpj + '/' + 
-      this.employee.cpf, JSON.stringify(this.employee))
+    let cnpj = this.sanitize(this.company.cnpj)
+    let cpf  = this.sanitize(this.employee.cpf)
+    
+    let url = this.baseCompanyEmployeeUrl + '/create/' + cnpj + '/' + cpf
+    console.log('URL de requisição: ' + url)
+    return this.httpClient.post<any>(url, JSON.stringify(this.employee))
+  }
+
+  sanitize(value: string): string {
+    value = value.replace(/[./-]/g, '');
+    value = this.sanitizer.sanitize(SecurityContext.NONE, value) ?? ''
+    return value
   }
 }

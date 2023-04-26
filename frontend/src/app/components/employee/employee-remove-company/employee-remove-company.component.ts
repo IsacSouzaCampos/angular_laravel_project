@@ -23,8 +23,8 @@ export class EmployeeRemoveCompanyComponent {
       this.companyEmployeeService.showSnackBar('Vínculo removido com sucesso!')
       this.router.navigate(['employee'])
     }, error => {
-      this.companyEmployeeService.showSnackBar(error.message)
-      this.router.navigate(['employee'])
+      this.companyEmployeeService.showSnackBar('Não foi possível remover o vínculo!')
+      console.error(error)
     })
   }
 

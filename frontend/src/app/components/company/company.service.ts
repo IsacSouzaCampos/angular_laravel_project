@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, SecurityContext } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 
 import { Company } from './company.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class CompanyService {
   }
 
   constructor(private snackBar: MatSnackBar,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer) { }
 
   showSnackBar(msg: string): void {
     this.snackBar.open(msg, 'X', {
@@ -36,10 +38,18 @@ export class CompanyService {
   }
 
   read(cnpj: string): Observable<Company> {
+    cnpj = this.sanitize(cnpj)
     return this.httpClient.get<Company>(this.baseApiUrl + '/' + cnpj)
   }
 
   remove(cnpj: string): Observable<any> {
+    cnpj = this.sanitize(cnpj)
     return this.httpClient.delete<any>(this.baseApiUrl + '/' + cnpj)
+  }
+
+  sanitize(value: string): string {
+    value = value.replace(/[./-]/g, '');
+    value = this.sanitizer.sanitize(SecurityContext.NONE, value) ?? ''
+    return value
   }
 }
