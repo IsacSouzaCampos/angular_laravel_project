@@ -12,6 +12,11 @@ use App\Models\CompanyEmployee;
 
 class crudController extends Controller
 {
+    public function test()
+    {
+        return response()->json(['message' => 'Teste funcionando!'], 200);
+    }
+
     public function createCompany(Request $request)
     {
         try

@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('test', [crudController::class, 'test']);
+
 Route::post('company/create', [crudController::class, 'createCompany']);
 
 Route::get('company/{cnpj}', [crudController::class, 'getCompany']);
